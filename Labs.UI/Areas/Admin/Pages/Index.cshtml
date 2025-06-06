@@ -1,0 +1,55 @@
+﻿@page
+@model Labs.UI.Areas.Admin.Pages.IndexModel
+
+@{
+    ViewData["Title"] = "Панель администратора";
+}
+
+<div class="container">
+    <h2 class="mb-4">Панель администратора</h2>
+    <div class="d-flex justify-content-start mb-4">
+        <a asp-page="Create" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i> Добавить товар
+        </a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
+        @foreach (var item in Model.PetFood)
+        {
+            <div class="col">
+                <div class="card h-100 d-flex flex-column shadow-sm">
+                    <img src="@item.Image" class="card-img-top" style="max-height: 200px; object-fit: contain;" alt="Товар">
+
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Description</p>
+                    </div>
+
+                    <div class="px-3 pb-2">
+                        <p class="mb-1"><strong>Цена:</strong> @item.Price.ToString("F2") €</p>
+                        <p class="mb-2"><strong>Категория:</strong> @item.Category?.Name</p>
+                    </div>
+
+                    <div class="card-footer d-flex justify-content-between">
+                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-outline-success btn-sm">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </a>
+                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    
+    <div class="mt-4" style="margin-left: 12px;">
+        <pager page-current="@Model.CurrentPage"
+               page-total="@Model.TotalPages"
+               admin="true">
+        </pager>
+    </div>
+</div>

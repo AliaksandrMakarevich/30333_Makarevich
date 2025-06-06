@@ -1,0 +1,30 @@
+﻿@page "/products"
+@rendermode InteractiveServer
+@using Labs.Blazor.Components.ProductComponents
+@using Labs.Domain.Models
+
+<CascadingValue Value="ProductService">
+    <PetFoodList PetFoodSelected="ShowDetails"/>
+    <Pager/>
+</CascadingValue>
+
+<PetFoodDetails PetFood="SelectedPetFood"/>
+
+@code 
+{
+    [Inject]
+    IProductService<PetFood> ProductService { get; set; } = default!;
+
+    [Parameter]
+    public PetFood? SelectedPetFood { get; set; }
+
+    protected override async Task OnInitializedAsync()    
+    {
+        await ProductService.GetProducts();
+    }
+
+    void ShowDetails(int id)
+    {
+        SelectedPetFood = ProductService.Products.First(d => d.Id == id);
+    }
+}

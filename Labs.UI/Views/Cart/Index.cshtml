@@ -1,0 +1,57 @@
+﻿@using Labs.Domain.Models
+@model Dictionary<int, CartItem>
+@{
+    ViewData["Title"] = "Корзина";
+}
+
+@if (!Model.Any())
+{
+    <h3 class="m-3">Корзина пуста</h3>
+}
+else
+{
+    <div class="container mt-4 mb-5">
+        <h3 class="mb-4">Ваша корзина:</h3>
+
+        @foreach (var item in Model)
+        {
+            var product = item.Value.Item;
+            var quantity = item.Value.Quantity;
+
+            <div class="card mb-3 shadow-sm">
+                <div class="row g-0 align-items-center">
+                    <div class="col-md-2 p-2 text-center">
+                        <img src="@product.Image" class="img-fluid rounded" style="max-height: 120px; object-fit: contain;" />
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <h5 class="card-title mb-1">@product.Name</h5>
+                            <p class="card-text text-muted">@product.Description</p>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <div class="btn-group" role="group">
+                            <form method="post" asp-action="Decrease" asp-route-id="@product.Id">
+                                <button class="btn btn-outline-secondary btn-sm">−</button>
+                            </form>
+                            <span class="mx-2 align-self-center fw-bold">@quantity</span>
+                            <form method="post" asp-action="Increase" asp-route-id="@product.Id">
+                                <button class="btn btn-outline-secondary btn-sm">+</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <a class="btn btn-outline-danger btn-sm"
+                           asp-action="Remove"
+                           asp-controller="Cart"
+                           asp-route-id="@product.Id"
+                           title="Удалить">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+}

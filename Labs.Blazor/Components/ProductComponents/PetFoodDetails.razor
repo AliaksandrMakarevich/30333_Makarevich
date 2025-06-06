@@ -1,0 +1,26 @@
+﻿@if (PetFood != null)
+{
+    <div class="card mt-4" style="width: 20rem;">
+        @if (!string.IsNullOrEmpty(PetFood.Image))
+        {
+            <img src="@PetFood.Image" class="card-img-top" alt="@PetFood.Description" />
+        }
+        <div class="card-body">
+            <h5 class="card-title">@PetFood.Description</h5>
+            <p class="card-text"><strong>Цена:</strong> @PetFood.Price €</p>
+            @if (PetFood.Category != null)
+            {
+                <span class="badge bg-secondary">Категория: @PetFood.Category.Name</span>
+            }
+        </div>
+    </div>
+}
+
+@code 
+{
+    [Parameter]
+    public PetFood? PetFood { get; set; }
+
+    [Parameter]
+    public EventCallback<PetFood> PetFoodChanged { get; set; }
+}

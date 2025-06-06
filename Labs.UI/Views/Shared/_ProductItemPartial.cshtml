@@ -1,0 +1,24 @@
+﻿@model PetFood 
+@{
+    var request = ViewContext.HttpContext.Request;
+    var returnUrl = request.Path + request.QueryString.ToUriComponent(); 
+}
+<div class="col-12 col-md-4 p-2">
+    <div class="card h-100">
+        <img class="card-img-top" src="@Model.Image" alt="No image available" style="max-height: 150px; object-fit: contain;" />
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <p class="card-text">@Model.Description</p>
+            <h5><span class="badge bg-primary">@Model.Price €</span></h5>
+        </div>
+        <div class="card-footer text-center">
+            <a class="btn btn-outline-primary"
+               asp-action="Add"
+               asp-controller="Cart"
+               asp-route-id="@Model.Id"
+               asp-route-returnurl="@returnUrl">
+               <i class="fa-solid fa-cart-plus me-2"></i> Add to cart
+            </a>
+        </div>
+    </div>
+</div>

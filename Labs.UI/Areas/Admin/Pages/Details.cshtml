@@ -1,0 +1,41 @@
+﻿@page
+@model Labs.UI.Areas.Admin.Pages.DetailsModel
+
+@{
+    ViewData["Title"] = "Информация о товаре";
+}
+
+<div class="container mt-4 mb-5">
+    <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Информация о товаре</h4>
+
+            <dl class="row">
+                <dt class="col-sm-4">Название</dt>
+                <dd class="col-sm-8">@Model.PetFood.Name</dd>
+
+                <dt class="col-sm-4">Описание</dt>
+                <dd class="col-sm-8">@Model.PetFood.Description</dd>
+
+                <dt class="col-sm-4">Цена</dt>
+                <dd class="col-sm-8">@Model.PetFood.Price.ToString("F2") €</dd>
+
+                <dt class="col-sm-4">Категория</dt>
+                <dd class="col-sm-8">@Model.PetFood.Category?.Name</dd>
+
+                @if (!string.IsNullOrEmpty(Model.PetFood.Image))
+                {
+                    <dt class="col-sm-4">Изображение</dt>
+                    <dd class="col-sm-8">
+                        <img src="@Model.PetFood.Image" alt="Товар" class="img-thumbnail" style="max-height: 200px;" />
+                    </dd>
+                }
+            </dl>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a asp-page="./Edit" asp-route-id="@Model.PetFood.Id" class="btn btn-primary">Редактировать</a>
+                <a asp-page="./Index" class="btn btn-secondary">Назад</a>
+            </div>
+        </div>
+    </div>
+</div>
